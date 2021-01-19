@@ -1,23 +1,41 @@
 package com.healthcare.restservice.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.sun.istack.NotNull;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.NotFound;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "company")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class ProductCompany {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(unique = true)
     private String name;
+
+    @CreationTimestamp
+    private LocalDateTime dateAdded;
+
+    @NotNull
+    @Column(nullable = false)
+    private String GSTNumber;
+
+    @ColumnDefault("true")
+    @org.hibernate.annotations.Generated(GenerationTime.INSERT)
+    private Boolean isEnabled;
+
+    public ProductCompany(Long companyID) {
+        this.id = companyID;
+    }
 }

@@ -58,6 +58,7 @@ public class ProductController {
     @PostMapping("add-new-category")
     public ResponseEntity<Category> addNewCategory(@RequestBody Category category) {
         Category newProduct = this.categoryService.addNewCategory(category);
+        System.out.println(category);
         if (newProduct == null) {
             return ResponseEntity.badRequest().body(null);
         }
@@ -66,8 +67,8 @@ public class ProductController {
 
     @PostMapping(value = "add-new-company", consumes = {})
     public ResponseEntity<ProductCompany> addNewProductCompany(@RequestBody ProductCompany productCompany) {
+        System.out.println(productCompany);
         ProductCompany productCompany1 = this.productCompanyService.addProductCompany(productCompany);
-
         if (productCompany1 == null) {
             return ResponseEntity.badRequest().body(null);
         }

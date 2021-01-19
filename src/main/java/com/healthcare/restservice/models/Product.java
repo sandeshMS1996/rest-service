@@ -1,21 +1,20 @@
 package com.healthcare.restservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-
+import org.hibernate.annotations.GenerationTime;
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,8 +31,9 @@ public class Product {
     @CreationTimestamp
     private LocalDateTime dateAdded;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category", nullable = false)
+    @JsonBackReference
     private Category category;
 
     @Column(length = 1000, nullable = true)
@@ -41,19 +41,19 @@ public class Product {
 
     private String imageName;
 
+    private Integer stock;
+
     @ManyToOne
     private ProductCompany productCompany;
 
-    private Integer stock;
-
+    @ColumnDefault("true")
+    @org.hibernate.annotations.Generated(GenerationTime.INSERT)
     private boolean isNotDisabled;
 
     public Product(Long id) {
         this.id = id;
     }
 
-    @PrePersist
-    public void enableProduct() {
-        this.isNotDisabled = true;
-    }
+
+
 }

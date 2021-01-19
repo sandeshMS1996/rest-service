@@ -2,6 +2,7 @@ package com.healthcare.restservice.services;
 
 import com.healthcare.restservice.models.Category;
 import com.healthcare.restservice.models.Product;
+import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.models.Purchase;
 import com.healthcare.restservice.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,8 @@ public class ProductService {
         return this.productRepo.findProductByCategoryID(categoryId);
     }
 
-    public List<Product> filterProductsByCompany(Long id) {
-        return this.productRepo.findProductByProductCompanyId(id);
+    public List<Product> filterProductsByCompany(ProductCompany companies) {
+        return this.productRepo.findProductByProductCompany(companies);
     }
 
     public Double getCostByProductId(Long id) {
@@ -53,5 +54,6 @@ public class ProductService {
                 .map(purchase -> new Product(purchase.getProduct().getId()))
                 .allMatch(a -> this.productRepo.existsById(a.getId()));
     }
+
 
 }

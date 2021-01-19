@@ -1,6 +1,7 @@
 package com.healthcare.restservice.controller;
 
 import com.healthcare.restservice.models.Product;
+import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.models.Purchase;
 import com.healthcare.restservice.services.ProductService;
 import com.healthcare.restservice.services.PurchaseService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,17 +37,6 @@ public class CustomerController {
         return ResponseEntity.ok(byId);
     }
 
-    @GetMapping("get-products-by-category/{cat-id}")
-    public ResponseEntity<List<Product>> findProductsByCategory(@PathVariable("cat-id") Long categoryId) {
-        List<Product> products = this.productService.filterProductsByCategory(categoryId);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(products);
-    }
-
-    @GetMapping("get-products-by-company/{com-id}")
-    public ResponseEntity<List<Product>> findProductByCompany(@PathVariable("com-id") Long id) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(
-          this.productService.filterProductsByCompany(id));
-    }
 
     @PostMapping("purchase")
     public ResponseEntity<Boolean> purchase(@RequestBody List<Purchase> purchaseList,
@@ -55,5 +46,23 @@ public class CustomerController {
         if(record)
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(false);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
+    }
+
+    @PostMapping("filter")
+    public ResponseEntity<List<Product>> filter(@RequestParam(required = false, value = "companyId") Long companyID,
+                                          @RequestParam(required = false, value = "categoryId") Long categoryId) {
+        System.out.println(companyID + " " + categoryId);
+        if(companyID  == null && categoryId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } else if(companyID != null && categoryId == null) {
+            System.out.println("company ID " + companyID);
+            List<Product> products = this.productService.filterProductsByCompany(new ProductCompany(companyID));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(products);
+        } else if(companyID == null) {
+            System.out.println("category ID " + categoryId);
+            List<Product> products = this.productService.filterProductsByCategory(categoryId);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(products);
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(List.of(new Product()));
     }
 }

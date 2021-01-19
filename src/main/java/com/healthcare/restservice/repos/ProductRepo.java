@@ -1,8 +1,8 @@
 package com.healthcare.restservice.repos;
 
 
-import com.healthcare.restservice.models.Category;
 import com.healthcare.restservice.models.Product;
+import com.healthcare.restservice.models.ProductCompany;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +13,7 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
 
     List<Product> findProductByCategoryID(Long categoryId);
 
-    List<Product> findProductByProductCompanyId(long companyId);
+    List<Product> findProductByProductCompany(ProductCompany productCompany);
 
-    List<Product> findProductByCategoryIDAndProductCompanyId(long category_ID, Long productCompany_id);
+    Product findProductByName(String name);
 }
