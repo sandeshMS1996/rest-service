@@ -21,4 +21,8 @@ public class CategoryService {
     public List<Category> getAllCategories() {
         return this.categoryRepo.findAll();
     }
+
+    public Category getCategoryById(Long id) {
+        return this.categoryRepo.findById(id).orElse(null);
+    }
 }

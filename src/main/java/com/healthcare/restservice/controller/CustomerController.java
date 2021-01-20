@@ -1,8 +1,10 @@
 package com.healthcare.restservice.controller;
 
+import com.healthcare.restservice.models.Category;
 import com.healthcare.restservice.models.Product;
 import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.models.Purchase;
+import com.healthcare.restservice.services.CategoryService;
 import com.healthcare.restservice.services.ProductService;
 import com.healthcare.restservice.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class CustomerController {
 
     @Autowired
     private PurchaseService purchaseService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @GetMapping("all-products")
     public ResponseEntity<List<Product>> getAllProducts() {
@@ -64,5 +69,11 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(products);
         }
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(List.of(new Product()));
+    }
+
+    @GetMapping("get-category-by-id/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long id) {
+        Category category = this.categoryService.getCategoryById(id);
+        return ResponseEntity.ok(category);
     }
 }

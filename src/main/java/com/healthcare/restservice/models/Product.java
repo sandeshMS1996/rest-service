@@ -1,11 +1,13 @@
 package com.healthcare.restservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -28,6 +30,8 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
+    private int discount;
+
     @CreationTimestamp
     private LocalDateTime dateAdded;
 
@@ -43,7 +47,10 @@ public class Product {
 
     private Integer stock;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
+    private ProductDescription productDescription;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private ProductCompany productCompany;
 
     @ColumnDefault("true")

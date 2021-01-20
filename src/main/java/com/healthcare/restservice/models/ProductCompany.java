@@ -1,14 +1,17 @@
 package com.healthcare.restservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
-import org.hibernate.annotations.NotFound;
+
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity(name = "company")
 @Getter
@@ -35,7 +38,18 @@ public class ProductCompany {
     @org.hibernate.annotations.Generated(GenerationTime.INSERT)
     private Boolean isEnabled;
 
+    @OneToMany(mappedBy = "productCompany", cascade = CascadeType.ALL)
+    private List<Product> products;
+
+    private int discount;
+
+    @ManyToMany(mappedBy = "productCompanyList")
+    @JsonManagedReference
+    private List<Category> categories;
+
     public ProductCompany(Long companyID) {
         this.id = companyID;
     }
+
+
 }

@@ -4,6 +4,7 @@ package com.healthcare.restservice.controller;
 import com.healthcare.restservice.models.Category;
 import com.healthcare.restservice.models.Product;
 import com.healthcare.restservice.models.ProductCompany;
+import com.healthcare.restservice.models.ProductDescription;
 import com.healthcare.restservice.services.CategoryService;
 import com.healthcare.restservice.services.ProductCompanyService;
 import com.healthcare.restservice.services.ProductService;
@@ -15,8 +16,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,19 +40,12 @@ public class ProductController {
     @PostMapping(value = "add-new-product", consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Product> addNewProduct(@RequestPart("data") String product1,
                                                  @RequestPart("file") MultipartFile multipartFile) throws Exception {
-        /*String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/downloadFile/")
-                .path(fileName)
-                .toUriString();
-*/
-
-        // System.out.println(fileName);
         Product product = new ObjectMapper().readValue(product1, Product.class);
         Product newProduct = this.productService.addNewProduct(product);
         if (newProduct == null) {
             return ResponseEntity.badRequest().body(null);
         }
-        String fileName = fileStorageService.storeFile(multipartFile, newProduct.getId());
+        fileStorageService.storeFile(multipartFile, newProduct.getId());
         return ResponseEntity.ok(newProduct);
     }
 
@@ -89,6 +83,14 @@ public class ProductController {
     @GetMapping("get-all-companies")
     public ResponseEntity<List<ProductCompany>> getAllCompanies() {
         return ResponseEntity.ok(this.productCompanyService.getAllCompanies());
+    }
+
+    @GetMapping("get-all-dosageForms")
+    public ResponseEntity<List<String>> getDosageForm() {
+        List<String> dosage = new ArrayList<>();
+        for (ProductDescription.DoseForm value : ProductDescription.DoseForm.values())
+            dosage.add(value.name());
+        return ResponseEntity.ok(dosage);
     }
 
 }

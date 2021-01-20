@@ -5,6 +5,7 @@ import com.healthcare.restservice.models.Product;
 import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.models.Purchase;
 import com.healthcare.restservice.repos.ProductRepo;
+import com.healthcare.restservice.utils.DiscountProcesser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,9 @@ public class ProductService {
     @Autowired
     private ProductRepo productRepo;
 
+    @Autowired
+    private DiscountProcesser discountProcesser;
+
     public Product addNewProduct(Product product) {
         return this.productRepo.save(product);
     }
@@ -26,19 +30,19 @@ public class ProductService {
     }
 
     public List<Product> getAllProducts() {
-        return this.productRepo.findAll();
+        return this.discountProcesser.updateOptimalDiscount(this.productRepo.findAll());
     }
 
     public Optional<Product> getProductById(Long id) {
-        return this.productRepo.findById(id);
+        return this.discountProcesser.updateOptimalDiscount(this.productRepo.findById(id));
     }
     
     public List<Product> filterProductsByCategory(Long categoryId) {
-        return this.productRepo.findProductByCategoryID(categoryId);
+        return this.discountProcesser.updateOptimalDiscount(this.productRepo.findProductByCategoryID(categoryId));
     }
 
     public List<Product> filterProductsByCompany(ProductCompany companies) {
-        return this.productRepo.findProductByProductCompany(companies);
+        return this.discountProcesser.updateOptimalDiscount(this.productRepo.findProductByProductCompany(companies));
     }
 
     public Double getCostByProductId(Long id) {
