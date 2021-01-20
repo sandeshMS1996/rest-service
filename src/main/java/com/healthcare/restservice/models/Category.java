@@ -33,16 +33,12 @@ public class Category {
 
     @ManyToMany
     @Column(nullable = false)
-    @JsonBackReference
+    @JsonManagedReference
     private List<ProductCompany> productCompanyList;
 
     private int discount;
 
     @CreationTimestamp
     private LocalDateTime dateAdded;
-
-    @OneToMany(mappedBy = "category")
-    @JsonManagedReference
-    private List<Product> products;
 
 }

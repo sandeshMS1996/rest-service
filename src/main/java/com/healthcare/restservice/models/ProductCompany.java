@@ -1,6 +1,7 @@
 package com.healthcare.restservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -38,13 +39,11 @@ public class ProductCompany {
     @org.hibernate.annotations.Generated(GenerationTime.INSERT)
     private Boolean isEnabled;
 
-    @OneToMany(mappedBy = "productCompany", cascade = CascadeType.ALL)
-    private List<Product> products;
 
     private int discount;
 
     @ManyToMany(mappedBy = "productCompanyList")
-    @JsonManagedReference
+    @JsonBackReference
     private List<Category> categories;
 
     public ProductCompany(Long companyID) {

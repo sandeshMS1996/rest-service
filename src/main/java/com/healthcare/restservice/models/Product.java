@@ -1,6 +1,8 @@
 package com.healthcare.restservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
 import lombok.*;
@@ -37,7 +39,7 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Category category;
 
     @Column(length = 1000, nullable = true)
@@ -51,6 +53,7 @@ public class Product {
     private ProductDescription productDescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private ProductCompany productCompany;
 
     @ColumnDefault("true")
@@ -60,7 +63,6 @@ public class Product {
     public Product(Long id) {
         this.id = id;
     }
-
 
 
 }
