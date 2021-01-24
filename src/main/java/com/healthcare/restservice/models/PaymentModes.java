@@ -1,5 +1,5 @@
 package com.healthcare.restservice.models;
 
 public enum PaymentModes {
-    CREDIT_CARD, DEBIT_CARD, UPI
+    CREDIT_CARD, UPI
 }

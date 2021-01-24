@@ -11,9 +11,10 @@ import java.util.stream.Collectors;
 public class DiscountProcesser {
     public Product updateOptimalDiscount(Product product) {
         if(product != null) {
-            Optional<Integer> max = List.of(product.getDiscount(), product.getCategory().getDiscount(),
+            System.out.println("Discount processing");
+            Optional<Double> max = List.of(product.getDiscount(), product.getCategory().getDiscount(),
                     product.getProductCompany().getDiscount())
-                    .stream().max(Integer::compareTo);
+                    .stream().max(Double::compareTo);
             product.setDiscount(max.get());
             return product;
         }

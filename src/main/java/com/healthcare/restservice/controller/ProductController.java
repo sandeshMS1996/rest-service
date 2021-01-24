@@ -25,17 +25,21 @@ import java.util.List;
 @CrossOrigin("*")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
+
+    private final CategoryService categoryService;
+
+    private final ProductCompanyService productCompanyService;
+
+    private final FileStorageService fileStorageService;
 
     @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private ProductCompanyService productCompanyService;
-
-    @Autowired
-    private FileStorageService fileStorageService;
+    public ProductController(ProductService productService, CategoryService categoryService, ProductCompanyService productCompanyService, FileStorageService fileStorageService) {
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.productCompanyService = productCompanyService;
+        this.fileStorageService = fileStorageService;
+    }
 
     @PostMapping(value = "add-new-product", consumes = {MediaType.APPLICATION_JSON_VALUE,MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<Product> addNewProduct(@RequestPart("data") String product1,
@@ -93,4 +97,31 @@ public class ProductController {
         return ResponseEntity.ok(dosage);
     }
 
+    @PostMapping("update-product-discount/{id}")
+    public ResponseEntity<Product> updateProductDiscount(@PathVariable("id") Long id,
+                                                         @RequestParam("updated-discount") Integer updatedDiscount) {
+        Product product = this.productService.updateProductDiscount(id, updatedDiscount);
+        return ResponseEntity.ok(product);
+    }
+
+    @PostMapping("update-category-discount/{id}")
+    public ResponseEntity<Category> updateCategoryDiscount(@PathVariable("id") Long id,
+                                                         @RequestParam("updated-discount") Integer updatedDiscount) {
+        Category category = this.categoryService.updateCategoryDiscount(id, updatedDiscount);
+        return ResponseEntity.ok(category);
+    }
+
+
+    @PostMapping("update-company-discount/{id}")
+    public ResponseEntity<ProductCompany> updateCompanyDiscount(@PathVariable("id") Long id,
+                                                           @RequestParam("updated-discount") Integer updatedDiscount) {
+        ProductCompany discount = this.productCompanyService.updateCompanyDiscount(id, updatedDiscount);
+        return ResponseEntity.ok(discount);
+    }
+
+    @PostMapping("change-product-availability/{id}")
+    public ResponseEntity<Product> updateProductAvailability(@PathVariable("id") long id, @RequestParam("enable") Boolean aBoolean) {
+        Product product = this.productService.updateAvaliabality(id, aBoolean);
+        return ResponseEntity.ok(product);
+    }
 }

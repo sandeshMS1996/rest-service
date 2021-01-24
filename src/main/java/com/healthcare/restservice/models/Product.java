@@ -32,12 +32,12 @@ public class Product {
     @Column(nullable = false)
     private double price;
 
-    private int discount;
+    private double discount;
 
     @CreationTimestamp
     private LocalDateTime dateAdded;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category", nullable = false)
     @JsonIgnore
     private Category category;
@@ -52,7 +52,7 @@ public class Product {
     @OneToOne(cascade = CascadeType.ALL)
     private ProductDescription productDescription;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnore
     private ProductCompany productCompany;
 

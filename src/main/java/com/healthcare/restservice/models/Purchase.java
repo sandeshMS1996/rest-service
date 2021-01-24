@@ -1,5 +1,6 @@
 package com.healthcare.restservice.models;
 
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +21,12 @@ public class Purchase {
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
 
+   @Column(nullable = false)
    private String username;
 
-   @OneToOne
+   private Double appliedDiscount;
+
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private Product product;
 
    private Integer count;
@@ -34,4 +38,10 @@ public class Purchase {
 
    @Enumerated(EnumType.STRING)
    private PaymentModes paymentMode;
+
+   public Purchase updateProduct(Product newProduct){
+      this.product = newProduct;
+      System.out.println("updated product in purchase model");
+      return this;
+   }
 }

@@ -5,6 +5,7 @@ import com.healthcare.restservice.models.Product;
 import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.models.Purchase;
 import com.healthcare.restservice.services.CategoryService;
+import com.healthcare.restservice.services.ProductCompanyService;
 import com.healthcare.restservice.services.ProductService;
 import com.healthcare.restservice.services.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class CustomerController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private ProductCompanyService productCompanyService;
+
     @GetMapping("all-products")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> allProducts = this.productService.getAllProducts();
@@ -43,7 +47,7 @@ public class CustomerController {
     }
 
 
-    @PostMapping("purchase")
+    /*@PostMapping("purchase")
     public ResponseEntity<Boolean> purchase(@RequestBody List<Purchase> purchaseList,
                                             @RequestParam("payment-made") Double paymentMade) {
         System.out.println(purchaseList + "\n" + paymentMade);
@@ -51,7 +55,7 @@ public class CustomerController {
         if(record)
             return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(false);
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
-    }
+    }*/
 
     @PostMapping("filter")
     public ResponseEntity<List<Product>> filter(@RequestParam(required = false, value = "companyId") Long companyID,
@@ -75,5 +79,32 @@ public class CustomerController {
     public ResponseEntity<Category> getCategoryById(@PathVariable("id") Long id) {
         Category category = this.categoryService.getCategoryById(id);
         return ResponseEntity.ok(category);
+    }
+
+    @GetMapping("get-company-by-category/{categoryId}")
+    public ResponseEntity<List<ProductCompany>> getCompanyByCategory(@PathVariable("categoryId") Long id) {
+        return ResponseEntity.ok(this.productCompanyService.findCompanyByCategory(id));
+    }
+    @PostMapping("get-total-price")
+    public ResponseEntity<Double> getTotalPrice(@RequestBody List<Purchase> purchaseList) {
+        return ResponseEntity.ok(this.productService.getTotalPrice(purchaseList));
+    }
+
+    @PostMapping("purchase")
+    public ResponseEntity<Boolean> purchase(@RequestBody List<Purchase> purchaseList, @RequestParam("total-cost") Double totalCost) {
+        Boolean purchaseRecord = this.purchaseService.addPurchaseRecord(purchaseList, totalCost);
+        if(purchaseRecord)
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
+        return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(false);
+    }
+
+    @GetMapping("getMyPurchases")
+    public ResponseEntity<List<Purchase>> getMyPurchase(@RequestParam("username") String username) {
+        return ResponseEntity.ok(this.purchaseService.getMyPurchase(username));
+    }
+
+    @GetMapping("find-by-name")
+    public ResponseEntity<Product> getProductByName(@RequestParam("name") String name) {
+        return ResponseEntity.ok(this.productService.findProductByName(name));
     }
 }

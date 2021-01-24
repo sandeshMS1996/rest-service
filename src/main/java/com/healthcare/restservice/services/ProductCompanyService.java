@@ -1,11 +1,13 @@
 package com.healthcare.restservice.services;
 
+import com.healthcare.restservice.models.Category;
 import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.repos.ProductCompanyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductCompanyService {
@@ -21,5 +23,18 @@ public class ProductCompanyService {
         return this.productCompanyRepo.findAll();
     }
 
+    public ProductCompany updateCompanyDiscount(long id, int updatedDiscount) {
+        Optional<ProductCompany> byId = this.productCompanyRepo.findById(id);
+        if(byId.isPresent()) {
+            ProductCompany productCompany = byId.get();
+            productCompany.setDiscount(updatedDiscount);
+            return this.productCompanyRepo.save(productCompany);
+        }
+        return null;
 
+    }
+
+    public List<ProductCompany> findCompanyByCategory(Long categoryId) {
+        return this.productCompanyRepo.findProductCompaniesByCategories(new Category(categoryId));
+    }
 }

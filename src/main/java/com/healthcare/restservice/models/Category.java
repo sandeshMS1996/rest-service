@@ -2,6 +2,7 @@ package com.healthcare.restservice.models;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -33,12 +34,15 @@ public class Category {
 
     @ManyToMany
     @Column(nullable = false)
-    @JsonManagedReference
+    @JsonIgnore
     private List<ProductCompany> productCompanyList;
 
-    private int discount;
+    private double discount;
 
     @CreationTimestamp
     private LocalDateTime dateAdded;
 
+    public Category(Long categoryId) {
+        this.ID = categoryId;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -24,5 +25,15 @@ public class CategoryService {
 
     public Category getCategoryById(Long id) {
         return this.categoryRepo.findById(id).orElse(null);
+    }
+
+    public Category updateCategoryDiscount(long id, int updatedDiscount) {
+        Optional<Category> byId = this.categoryRepo.findById(id);
+        if(byId.isPresent()) {
+            Category category = byId.get();
+            category.setDiscount(updatedDiscount);
+            return this.categoryRepo.save(category);
+        }
+        return null;
     }
 }

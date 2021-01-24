@@ -1,6 +1,7 @@
 package com.healthcare.restservice.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.NotNull;
@@ -40,10 +41,10 @@ public class ProductCompany {
     private Boolean isEnabled;
 
 
-    private int discount;
+    private double discount;
 
     @ManyToMany(mappedBy = "productCompanyList")
-    @JsonBackReference
+    @JsonIgnore
     private List<Category> categories;
 
     public ProductCompany(Long companyID) {
