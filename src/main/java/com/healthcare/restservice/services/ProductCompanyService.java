@@ -1,6 +1,5 @@
 package com.healthcare.restservice.services;
 
-import com.healthcare.restservice.models.Category;
 import com.healthcare.restservice.models.ProductCompany;
 import com.healthcare.restservice.repos.ProductCompanyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +31,5 @@ public class ProductCompanyService {
         }
         return null;
 
-    }
-
-    public List<ProductCompany> findCompanyByCategory(Long categoryId) {
-        return this.productCompanyRepo.findProductCompaniesByCategories(new Category(categoryId));
     }
 }

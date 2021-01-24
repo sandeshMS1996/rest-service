@@ -40,8 +40,14 @@ public class Purchase {
    private PaymentModes paymentMode;
 
    public Purchase updateProduct(Product newProduct){
-      this.product = newProduct;
-      System.out.println("updated product in purchase model");
+      if(newProduct != null) {
+         System.out.println(newProduct);
+         System.out.println(newProduct);
+         this.product = newProduct;
+         this.appliedDiscount = newProduct.getDiscount();
+         this.cost = newProduct.getPrice();
+      } else this.product = null;
+
       return this;
    }
 }

@@ -81,10 +81,6 @@ public class CustomerController {
         return ResponseEntity.ok(category);
     }
 
-    @GetMapping("get-company-by-category/{categoryId}")
-    public ResponseEntity<List<ProductCompany>> getCompanyByCategory(@PathVariable("categoryId") Long id) {
-        return ResponseEntity.ok(this.productCompanyService.findCompanyByCategory(id));
-    }
     @PostMapping("get-total-price")
     public ResponseEntity<Double> getTotalPrice(@RequestBody List<Purchase> purchaseList) {
         return ResponseEntity.ok(this.productService.getTotalPrice(purchaseList));

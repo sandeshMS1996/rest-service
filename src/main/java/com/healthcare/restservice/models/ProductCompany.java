@@ -36,16 +36,7 @@ public class ProductCompany {
     @Column(nullable = false)
     private String GSTNumber;
 
-    @ColumnDefault("true")
-    @org.hibernate.annotations.Generated(GenerationTime.INSERT)
-    private Boolean isEnabled;
-
-
     private double discount;
-
-    @ManyToMany(mappedBy = "productCompanyList")
-    @JsonIgnore
-    private List<Category> categories;
 
     public ProductCompany(Long companyID) {
         this.id = companyID;

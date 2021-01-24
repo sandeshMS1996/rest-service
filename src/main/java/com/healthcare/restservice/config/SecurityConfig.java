@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Configuration
-//@EnableResourceServer
+@EnableResourceServer
 @EnableWebSecurity
 @EnableAspectJAutoProxy
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

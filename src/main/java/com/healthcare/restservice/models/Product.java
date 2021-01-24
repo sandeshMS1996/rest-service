@@ -39,7 +39,6 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category", nullable = false)
-    @JsonIgnore
     private Category category;
 
     @Column(length = 1000, nullable = true)
@@ -53,7 +52,7 @@ public class Product {
     private ProductDescription productDescription;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JsonIgnore
+    @JoinColumn(nullable = false)
     private ProductCompany productCompany;
 
     @ColumnDefault("true")

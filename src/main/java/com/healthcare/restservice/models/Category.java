@@ -27,16 +27,6 @@ public class Category {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "is_Active", nullable = false)
-    @ColumnDefault("true")
-    @org.hibernate.annotations.Generated(GenerationTime.INSERT)
-    private boolean activeCategory;
-
-    @ManyToMany
-    @Column(nullable = false)
-    @JsonIgnore
-    private List<ProductCompany> productCompanyList;
-
     private double discount;
 
     @CreationTimestamp
