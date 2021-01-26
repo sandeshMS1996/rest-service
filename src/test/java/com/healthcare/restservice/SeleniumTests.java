@@ -19,8 +19,9 @@ public class SeleniumTests {
         System.setProperty("webdriver.chrome.driver",
                 "/var/lib/jenkins/workspace/chromedriver");
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+        //options.addArguments("--headless");
         options.addArguments("--no-sandbox");
+        options.addArguments("--allow-running-insecure-content");
         options.addArguments("--disable-dev-shm-usage");
         webDriver = new ChromeDriver(options);
     }
