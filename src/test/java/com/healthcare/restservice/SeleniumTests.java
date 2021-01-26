@@ -16,7 +16,7 @@ public class SeleniumTests {
     @BeforeMethod
     public void beforeMethod() {
         System.setProperty("webdriver.chrome.driver",
-                "/media/unknown/data/healthCare/chromedriver");
+                "/var/lib/jenkins/workspace/chromedriver");
         webDriver = new ChromeDriver();
     }
     @BeforeGroups("requireLogin")
