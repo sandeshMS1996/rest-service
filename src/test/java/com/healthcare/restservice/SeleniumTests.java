@@ -19,6 +19,7 @@ public class SeleniumTests {
         System.setProperty("webdriver.chrome.driver",
                 "/media/unknown/data/healthCare/chromedriver");
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
         options.setExperimentalOption("useAutomationExtension", false);
         webDriver = new ChromeDriver(options);
     }
@@ -68,8 +69,9 @@ public class SeleniumTests {
 
     @AfterMethod
     public void afterMethod() {
-
-        // close and quit the browser
-      webDriver.quit();
+        if(webDriver != null) {
+            webDriver.close();
+            webDriver.quit();
+        }
     }
 }
