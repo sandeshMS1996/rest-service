@@ -17,7 +17,9 @@ public class SeleniumTests {
     public void beforeMethod() {
         System.setProperty("webdriver.chrome.driver",
                 "/var/lib/jenkins/workspace/chromedriver");
-        webDriver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("useAutomationExtension", false);
+        webDriver = new ChromeDriver(options);
     }
     @BeforeGroups("requireLogin")
     public void login() throws InterruptedException {
