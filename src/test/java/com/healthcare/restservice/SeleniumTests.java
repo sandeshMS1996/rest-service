@@ -21,7 +21,7 @@ public class SeleniumTests {
         ChromeOptions options = new ChromeOptions();
         //options.addArguments("--headless");
         options.addArguments("start-maximized");
-        options.setBinary("/var/lib/jenkins/workspace/chromedriver");// open Browser in maximized mode
+        options.addArguments("--headless");
         options.addArguments("disable-infobars"); // disabling infobars
         options.addArguments("--disable-extensions"); // disabling extensions
         options.addArguments("--disable-gpu"); // applicable to windows os only
