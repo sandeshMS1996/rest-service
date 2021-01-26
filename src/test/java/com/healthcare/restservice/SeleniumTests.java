@@ -1,0 +1,72 @@
+package com.healthcare.restservice;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.*;
+
+import java.util.concurrent.TimeUnit;
+
+public class SeleniumTests {
+    private WebDriver webDriver;
+    private final String URL = "localhost:4200";
+    // /media/unknown/data/healthCare/chromedriver
+    @BeforeMethod
+    public void beforeMethod() {
+        System.setProperty("webdriver.chrome.driver",
+                "/media/unknown/data/healthCare/chromedriver");
+        webDriver = new ChromeDriver();
+    }
+    @BeforeGroups("requireLogin")
+    public void login() throws InterruptedException {
+        beforeMethod();
+       /* webDriver.get(URL + "/login");
+        WebElement username = webDriver.findElement(By.name("username"));
+        username.sendKeys("san1@gmail.com");
+        WebElement password = webDriver.findElement(By.name("password"));
+        password.sendKeys("12345");
+        WebElement btn = webDriver.findElement(By.className("btn"));
+        username.submit();
+        Thread.sleep(5);*/
+    }
+    @Test
+    public void loginFailTest() throws InterruptedException {
+        // navigate to the web site
+        webDriver.get(this.URL + "/login");
+        WebElement username = webDriver.findElement(By.name("username"));
+        username.sendKeys("san123@gmail.com");
+        WebElement password = webDriver.findElement(By.name("password"));
+        password.sendKeys("12345");
+        username.submit();
+        Thread.sleep(5000);
+        Assert.assertEquals(webDriver.getTitle(), "NetMeds");
+    }
+
+    public void loginSuccessTest() throws InterruptedException {
+        // navigate to the web site
+        webDriver.get(this.URL + "/login");
+        WebElement username = webDriver.findElement(By.name("username"));
+        username.sendKeys("san1@gmail.com");
+        WebElement password = webDriver.findElement(By.name("password"));
+        password.sendKeys("12345");
+        WebElement btn = webDriver.findElement(By.className("btn"));
+        username.submit();
+        Thread.sleep(5000);
+        Assert.assertEquals(webDriver.getTitle(), "NetMeds | Product List");
+    }
+    @Test(groups = {"requireLogin"})
+    public void ProductDetailsTest() throws InterruptedException {
+        webDriver.get(this.URL + "/user/product/3");
+        Thread.sleep(3000);
+        Assert.assertEquals(webDriver.getTitle(), "NetMeds | Product");
+    }
+
+    @AfterMethod
+    public void afterMethod() {
+
+        // close and quit the browser
+      webDriver.quit();
+    }
+}
