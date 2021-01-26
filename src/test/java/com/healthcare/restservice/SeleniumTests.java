@@ -17,7 +17,7 @@ public class SeleniumTests {
     @BeforeMethod
     public void beforeMethod() {
         System.setProperty("webdriver.chrome.driver",
-                "/media/unknown/data/healthCare/chromedriver");
+                "/var/lib/jenkins/workspace/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.setExperimentalOption("useAutomationExtension", false);
         webDriver = new ChromeDriver(options);
