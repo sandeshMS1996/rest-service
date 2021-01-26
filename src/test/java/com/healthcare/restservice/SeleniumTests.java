@@ -27,6 +27,7 @@ public class SeleniumTests {
         options.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems
         options.addArguments("--no-sandbox"); // Bypass OS security model
         options.addArguments("remote-debugging-port=0");
+        options.addArguments("--log-level=3");
         webDriver = new ChromeDriver(options);
     }
     @BeforeGroups("requireLogin")
