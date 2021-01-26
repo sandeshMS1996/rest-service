@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -17,7 +18,9 @@ public class SeleniumTests {
     public void beforeMethod() {
         System.setProperty("webdriver.chrome.driver",
                 "/media/unknown/data/healthCare/chromedriver");
-        webDriver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("useAutomationExtension", false);
+        webDriver = new ChromeDriver(options);
     }
     @BeforeGroups("requireLogin")
     public void login() throws InterruptedException {
