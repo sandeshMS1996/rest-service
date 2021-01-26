@@ -61,12 +61,12 @@ public class SeleniumTests {
         Thread.sleep(5000);
         Assert.assertEquals(webDriver.getTitle(), "NetMeds | Product List");
     }
-    @Test(groups = {"requireLogin"})
+   /* @Test(groups = {"requireLogin"})
     public void ProductDetailsTest() throws InterruptedException {
         webDriver.get(this.URL + "/user/product/3");
         Thread.sleep(3000);
         Assert.assertEquals(webDriver.getTitle(), "NetMeds | Product");
-    }
+    }*/
 
     @AfterMethod
     public void afterMethod() {
