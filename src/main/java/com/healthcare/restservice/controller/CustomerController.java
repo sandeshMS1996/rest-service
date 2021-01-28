@@ -88,7 +88,9 @@ public class CustomerController {
 
     @PostMapping("purchase")
     public ResponseEntity<Boolean> purchase(@RequestBody List<Purchase> purchaseList, @RequestParam("total-cost") Double totalCost) {
+        System.out.println(totalCost + " ==> " + purchaseList);
         Boolean purchaseRecord = this.purchaseService.addPurchaseRecord(purchaseList, totalCost);
+        System.out.println(purchaseRecord);
         if(purchaseRecord)
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
         return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(false);

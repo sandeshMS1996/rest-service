@@ -10,6 +10,7 @@ public class OauthResourceCpnfog extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/*.png").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/api/*").authenticated()
+                .anyRequest().permitAll();
     }
 }

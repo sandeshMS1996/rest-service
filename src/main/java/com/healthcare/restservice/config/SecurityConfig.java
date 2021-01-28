@@ -23,6 +23,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
+                .antMatchers("/api/customer/*").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/api/admin/*").hasRole("ADMIN")
                 .anyRequest()
                 .permitAll();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

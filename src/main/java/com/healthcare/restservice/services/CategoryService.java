@@ -16,6 +16,7 @@ public class CategoryService {
     private CategoryRepo categoryRepo;
 
     public Category addNewCategory(Category category) {
+        System.out.println("Server layer");
         return this.categoryRepo.save(category);
     }
 

@@ -56,7 +56,7 @@ public class ProductController {
     @PostMapping("add-new-category")
     public ResponseEntity<Category> addNewCategory(@RequestBody Category category) {
         Category newProduct = this.categoryService.addNewCategory(category);
-        System.out.println(category);
+        System.out.println("controller => " + newProduct);
         if (newProduct == null) {
             return ResponseEntity.badRequest().body(null);
         }

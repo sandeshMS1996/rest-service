@@ -50,4 +50,8 @@ public class Purchase {
 
       return this;
    }
+
+   public Purchase(Long id) {
+      this.id = id;
+   }
 }

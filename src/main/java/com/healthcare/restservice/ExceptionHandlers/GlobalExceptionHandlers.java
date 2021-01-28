@@ -21,7 +21,7 @@ public class GlobalExceptionHandlers {
 
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler({ConstraintViolationException.class})
-    public void Duplicate(DataIntegrityViolationException e) {
+    public void Duplicate(ConstraintViolationException e) {
         e.printStackTrace();
     }
 
