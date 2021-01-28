@@ -105,4 +105,13 @@ public class CustomerController {
     public ResponseEntity<Product> getProductByName(@RequestParam("name") String name) {
         return ResponseEntity.ok(this.productService.findProductByName(name));
     }
+    @GetMapping("get-all-categories")
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return ResponseEntity.ok(this.categoryService.getAllCategories());
+    }
+
+    @GetMapping("get-all-companies")
+    public ResponseEntity<List<ProductCompany>> getAllCompanies() {
+        return ResponseEntity.ok(this.productCompanyService.getAllCompanies());
+    }
 }
